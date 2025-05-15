@@ -1,0 +1,80 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--item-color);
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.span {
+  font-size: 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.span::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 0%;
+  background-color: var(--white-color);
+  bottom: 0;
+  left: 0;
+  transition: width .1s linear;
+}
+
+.span:hover::after {
+  width: 100%;
+}
+
+.passwordContainer {
+  position: relative;
+  padding-right: 40px;
+  background-color: var(--item-color);
+  border-radius: 10px;
+}
+
+.eyeBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+}
+
+@media (prefers-color-scheme: light) {
+  .input {
+    background-color: inherit;
+    border: 1px solid var(--blue-color);
+  }
+  .span::after {
+    background-color: var(--blue-color);
+  }
+  .passwordContainer {
+    background-color: inherit;
+    border: 1px solid var(--blue-color);
+  }
+  .passwordContainer input {
+    border: none;
+  }
+}
