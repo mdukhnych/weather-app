@@ -1,6 +1,7 @@
 'use client'
 
-import {  useState } from 'react';
+import { useState } from 'react';
+import Spinner from '@/components/ui//spinner/Spinner'
 import styles from './authForm.module.css';
 import useAuth from '@/hooks/useAuth';
 
@@ -10,13 +11,19 @@ export default function AuthForm() {
   const [password, setPassword] = useState('')
   const [isSignup, setIsSignup] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const { login } = useAuth()
+  const { login, signup } = useAuth()
 
   return (
-    <form className={styles.form} onSubmit={e => {
+    <form className={styles.form} onSubmit={async e => {
       e.preventDefault()
-      login(email, password)
+      setIsLoading(true)
+      if (isSignup) {
+        signup(email, password, name)
+      } else {
+        login(email, password)
+      }
     }}>
       { isSignup && <input className={styles.input} value={name} onChange={e => setName(e.target.value)} type="text" placeholder='Enter your name...' /> }
       <input className={styles.input} value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder='Enter your email...' />
@@ -25,13 +32,13 @@ export default function AuthForm() {
         <button type='button' className={styles.eyeBtn} onClick={() => setShowPassword(prev => !prev)}>
           {
             showPassword ? 
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
-              : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye-off-icon lucide-eye-off"><path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/><path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/><path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/><path d="m2 2 20 20"/></svg>
+              : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
           }
         </button>
       </div>
       <div className={styles.footer}>
-        <button type="submit" className='btn'>{ isSignup ? "Sign Up" : "Log In" }</button>
+        { isLoading ? <Spinner width="39px" height="39px" /> : <button type="submit" className='btn'>{ isSignup ? "Sign Up" : "Log In" }</button> }
         <span className={styles.span} onClick={() => setIsSignup(prev => !prev)}>{ isSignup ? "Already have an account? Log in" : "Don't have an account yet? Sign up" }</span>
       </div>
     </form>
