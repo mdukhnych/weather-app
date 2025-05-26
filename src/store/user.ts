@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 
-interface IUserStore {
-  name: string,
-  citiesList: ICity[],
-  setUserStore: (userData: IUser) => void
+interface IUserStore extends IUser {
+  setUserStore: (userData: IUser) => void,
+  setCitiesList: (newList: ICity[]) => void
 }
 
 export const useUserStore = create<IUserStore>((set) => ({
+  uid: '',
   name: '',
   citiesList: [],
-  setUserStore: (userData) => set({ name: userData.name, citiesList: userData.citiesList})
+  setUserStore: (userData) => set(userData),
+  setCitiesList: (newList) => set({citiesList: newList})
 }))

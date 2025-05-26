@@ -11,20 +11,27 @@ export default function AuthForm() {
   const [password, setPassword] = useState('')
   const [isSignup, setIsSignup] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
 
-  const { login, signup } = useAuth()
+  const { login, signup, isLoading, setIsLoading } = useAuth()
+
+  const submitHandler = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    try {
+      if (isSignup) {
+        await signup(email, password, name)
+      } else {
+        await login(email, password)
+      }
+    } catch (err) {
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <form className={styles.form} onSubmit={async e => {
-      e.preventDefault()
-      setIsLoading(true)
-      if (isSignup) {
-        signup(email, password, name)
-      } else {
-        login(email, password)
-      }
-    }}>
+    <form className={styles.form} onSubmit={submitHandler}>
       { isSignup && <input className={styles.input} value={name} onChange={e => setName(e.target.value)} type="text" placeholder='Enter your name...' /> }
       <input className={styles.input} value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder='Enter your email...' />
       <div className={styles.passwordContainer}>

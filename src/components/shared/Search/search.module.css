@@ -1,0 +1,58 @@
+.container {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
+  background-color: var(--item-color);
+  border-radius: 15px;
+  position: relative;
+}
+
+.container.listShow {
+  border-radius: 15px 15px 0 0;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.searchBtn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--item-color);
+  list-style: none;
+  transition: all 0.1s linear;
+  transform: scaleY(0);
+  transform-origin: top;
+  border-radius: 0 0 15px 15px;
+  overflow: hidden;
+}
+
+.list.listShow {
+  transform: scaleY(1);
+}
+
+.listItem {
+  padding: 15px;
+  cursor: pointer;
+  border-top: 1px solid var(--dark-color);
+  transition: all .1s linear;
+}
+
+.listItem:hover {
+  background-color: var(--blue-color);
+}
