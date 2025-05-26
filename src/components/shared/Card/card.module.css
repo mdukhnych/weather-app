@@ -1,0 +1,24 @@
+.card {
+  background-color: var(--item-color);
+  padding: 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  border: 1px solid var(--item-color);
+  transition: all .1s linear;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card.active {
+  background-color: transparent;
+  border-color: var(--blue-color);
+}
+
+.card:hover {
+  border-color: var(--blue-color);
+}
+
+.card:not(:first-child) {
+  margin: 10px 0;
+}

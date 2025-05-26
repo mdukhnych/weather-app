@@ -24,7 +24,8 @@ export default function useAuth() {
     }
   }
 
-  const setUser = (uid: string, name: string, citiesList: ICity[]) => {
+  const setUser = async (uid: string, name: string, citiesList: ICity[]) => {
+    
     setUserStore({uid, name, citiesList});
     router.replace(`/users/${name.replace(/\s+/g, "")}`);
   }

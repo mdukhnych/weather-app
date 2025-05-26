@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
 import useAuth from '@/hooks/useAuth'
+import { getWeather } from '@/services/weather'
 
 export default function AuthProvider() {
   const { getUserData, setUser } = useAuth();
@@ -13,7 +14,12 @@ export default function AuthProvider() {
       if (user) {
         const userData = await getUserData(user.uid)
         if (userData) {
-          setUser(userData.uid, userData.name, userData.citiesList)
+          const citiesList = []
+          for (const city of userData.citiesList) {
+            const weather = await getWeather(city)
+            citiesList.push({...city, weather})
+          }
+          setUser(userData.uid, userData.name, citiesList)
         } else {
           alert("Error to get user data!!!")
         }
