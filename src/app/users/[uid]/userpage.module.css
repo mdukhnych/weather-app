@@ -5,13 +5,21 @@
   max-width: 1200px;
   height: 100%;
   background-color: var(--background-color);
+  position: relative;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  gap: 20px;
+}
+
+.btnsPanel {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .content {

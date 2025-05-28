@@ -13,9 +13,14 @@ export default function UserPage() {
     <main className={styles.container}>
       <header className={styles.header}>
         <Search />
-        <button type='button' onClick={() => {
-          signOut(FIREBASE_AUTH)
-        }}>Settings</button>
+        <div className={styles.btnsPanel}>
+          <button type='button'>Delete</button>
+          <button type='button'>Update</button>
+          <button type='button'>Update All</button>
+          <button type='button' onClick={() => {
+            signOut(FIREBASE_AUTH)
+          }}>Settings</button>
+        </div>
       </header>
       <div className={styles.content}>
         <CitiesList />

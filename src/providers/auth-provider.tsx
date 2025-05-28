@@ -16,7 +16,7 @@ export default function AuthProvider() {
         if (userData) {
           const citiesList = []
           for (const city of userData.citiesList) {
-            const weather = await getWeather(city)
+            const weather = await getWeather({city: city})
             citiesList.push({...city, weather})
           }
           setUser(userData.uid, userData.name, citiesList)

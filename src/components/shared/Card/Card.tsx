@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import styles from './card.module.css'
+import Spinner from '@/components/ui/spinner/Spinner'
 
 interface ICardProps {
   city: ICity,
@@ -15,7 +16,11 @@ export default function Card({ city, isActive, onClick }: ICardProps) {
         {city.state && `, ${city.state}`}
         {city.country && `, ${city.country}`}
       </span>
-      <span className={styles.cityTemp}>{city.weather?.main?.temp ? Math.round(city.weather.main.temp) : '-'}&deg;</span>
+      {
+        city ?
+          <span className={styles.cityTemp}>{city.weather?.current?.temp ? Math.round(city.weather.current.temp) : '-'}&deg;</span>
+        : <Spinner width={20} height={20}/>
+      }
     </li>
   )
 }

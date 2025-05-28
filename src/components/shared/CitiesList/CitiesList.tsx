@@ -3,11 +3,11 @@
 import { useUserStore } from '@/store/user'
 import styles from './citiesList.module.css'
 import Card from '../Card/Card'
-import { useState } from 'react'
+import { useActiveCityStore } from '@/store/activeCity'
 
 export default function CitiesList() {
-  const [active, setActive] = useState<number>(0)
   const citiesList = useUserStore(state => state.citiesList)
+  const { activeIndex, setActiveIndex } = useActiveCityStore(state => state)
 
   return (
     <div className={styles.container}>
@@ -17,8 +17,8 @@ export default function CitiesList() {
             <Card 
               key={i} 
               city={city} 
-              isActive={active === i}
-              onClick={() => setActive(i)} 
+              isActive={activeIndex === i}
+              onClick={() => setActiveIndex(i)} 
             />
           ))
         }

@@ -4,6 +4,7 @@ import { useUserStore } from "@/store/user";
 import { useState } from "react";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebaseConfig";
+import { getWeather } from "@/services/weather";
 
 export default function useSearch() {
   const [value, setValue] = useState('')
@@ -53,7 +54,8 @@ export default function useSearch() {
     } catch (error) {
         console.error("Error to add a new city: ", error);
     }
-
+    const weather = await getWeather(city)
+    city.weather = weather
     setCitiesList([...citiesList, city])
     clearSearchField()
   }

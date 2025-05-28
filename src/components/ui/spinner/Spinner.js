@@ -1,6 +1,6 @@
-const Spinner = ({width, height}) => {
+const Spinner = ({width, height, styles = {}}) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" style={{margin: '0 auto', background: 'none', display: 'block'}} width={width} height={height} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+        <svg xmlns="http://www.w3.org/2000/svg" style={{margin: '0 auto', background: 'none', display: 'block', ...styles }} width={width} height={height} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
             <g transform="translate(80,50)">
             <g transform="rotate(0)">
             <circle cx="0" cy="0" r="7" fill="#1c4595" fillOpacity="1">
