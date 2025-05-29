@@ -54,7 +54,7 @@ export default function useSearch() {
     } catch (error) {
         console.error("Error to add a new city: ", error);
     }
-    const weather = await getWeather(city)
+    const weather = await getWeather({city: city})
     city.weather = weather
     setCitiesList([...citiesList, city])
     clearSearchField()

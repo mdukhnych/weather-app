@@ -1,0 +1,26 @@
+.forecastList {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.forecastListItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+}
+
+.heading, .temp {
+  font-weight: 700;
+}
+
+.forecastListItem:not(:last-child) {
+  border-right: 1px solid var(--gray-color);
+}
+
+.min {
+  color: #afafaf;
+  font-weight: 300;
+}

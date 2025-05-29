@@ -5,14 +5,11 @@ import styles from './details.module.css'
 import { useActiveCityStore } from '@/store/activeCity'
 import { useUserStore } from '@/store/user'
 import Spinner from '@/components/ui/spinner/Spinner'
+import ForecastList from '../ForecastList/ForecastList'
 
 export default function Deatils() {
   const { activeIndex } = useActiveCityStore(state => state)
   const city = useUserStore(state => state.citiesList[activeIndex])
-
-  const now = new Date().getHours()
-
-  console.log(now)
 
   return (
     <div className={styles.container}>
@@ -33,13 +30,13 @@ export default function Deatils() {
                 <WeatherIcon weatherId={city.weather?.current?.weather?.[0].id ?? 404} iconCode={city.weather?.current?.weather?.[0].icon ?? "d"} width={250} height={200} priority={true} />
               </div>
             </div>
-            <div className={styles.todaysForecast}>
-              <h3>today&apos;s forecast</h3>
-              
+            <div className={styles.hourlyForecast}>
+              <h3>hourly forecast</h3>
+              { city.weather?.hourly ? <ForecastList type="HourlyWeather" weather={city.weather.hourly} /> : null }
             </div>
-            <div className={styles.threeDaysForecast}>
-              <h3>3-days forecast</h3>
-
+            <div className={styles.dailyForecast}>
+              <h3>4-days forecast</h3>
+              { city.weather?.daily ? <ForecastList type="DailyWeather" weather={city.weather.daily} /> : null }
             </div>
 
           </> : <Spinner width={250} height={250} styles={{position: 'absolute', left: "50%", top: "100px", transform: "translateX(-50%)"}} />

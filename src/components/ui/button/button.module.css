@@ -1,0 +1,16 @@
+.btn {
+  background-color: transparent;
+  border: 1px solid var(--blue-color);
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: all .1s linear;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn:hover {
+  background-color: var(--blue-color);
+}
