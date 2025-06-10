@@ -3,10 +3,9 @@
   padding: 30px;
   width: 100%;
   max-width: 1260px;
-  min-height: 400px;
   background-color: var(--background-color);
-  position: relative;
   border-radius: 20px ;
+  min-height: 700px;
 }
 
 .header {

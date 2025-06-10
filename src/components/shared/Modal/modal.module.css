@@ -1,0 +1,54 @@
+.modal {
+  background-color: rgba(0, 0, 0, .8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modalInner {
+  background-color: var(--item-color);
+  border-radius: 20px;
+  padding: 20px;
+  cursor: default;
+  width: 500px;
+  position: relative;
+}
+.closeBtn {
+  position: absolute;
+  background: transparent;
+  border: none;
+  outline: none;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
+.weather {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--gray-color);
+
+}
+.weatherInfo {
+  display: flex;
+  flex-direction: column;
+}
+.weatherInfo span {
+  margin: 8px 0;
+}
+.details {
+  padding: 20px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.details span {
+  padding: 5px;
+  margin: 5px;
+  font-weight: 600;
+}

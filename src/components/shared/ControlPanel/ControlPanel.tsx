@@ -1,7 +1,17 @@
+'use client'
+
 import Button from '@/components/ui/button/Button'
 import styles from './controlPanel.module.css'
+import { useRouter } from 'next/navigation'
+import useSearch from '@/hooks/useSearch'
+import useWeather from '@/hooks/useWeather'
 
 export default function ControlPanel() {
+
+  const router = useRouter()
+  const { deleteCity } = useSearch()
+  const { refreshWeather,refreshWeatherToAll } = useWeather()
+
   return (
     <div className={styles.panel}>
       <Button 
@@ -12,6 +22,7 @@ export default function ControlPanel() {
           width: 20,
           height: 20
         }} 
+        onClick={deleteCity}
       />
       <Button 
         text={'Refresh'} 
@@ -21,6 +32,7 @@ export default function ControlPanel() {
           width: 20,
           height: 20
         }} 
+        onClick={refreshWeather}
       />
       <Button 
         text={'Refresh All'} 
@@ -30,6 +42,7 @@ export default function ControlPanel() {
           width: 20,
           height: 20
         }} 
+        onClick={refreshWeatherToAll}
       />
       <Button 
         text={'Settings'} 
@@ -39,6 +52,7 @@ export default function ControlPanel() {
           width: 20,
           height: 20
         }} 
+        onClick={() => router.push('/settings')}
       />
     </div>
   )

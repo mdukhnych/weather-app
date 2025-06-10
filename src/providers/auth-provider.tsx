@@ -4,10 +4,11 @@ import { useEffect } from 'react'
 import { onAuthStateChanged } from 'firebase/auth'
 import { FIREBASE_AUTH } from '../../firebaseConfig'
 import useAuth from '@/hooks/useAuth'
-import { getWeather } from '@/services/weather'
+import useWeather from '@/hooks/useWeather'
 
 export default function AuthProvider() {
   const { getUserData, setUser } = useAuth();
+  const { getWeather } = useWeather()
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, async (user) => {

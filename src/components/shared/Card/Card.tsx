@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import styles from './card.module.css'
 import Spinner from '@/components/ui/spinner/Spinner'
+import { useLoadingStore } from '@/store/loading'
 
 interface ICardProps {
   city: ICity,
@@ -9,6 +10,8 @@ interface ICardProps {
 }
 
 export default function Card({ city, isActive, onClick }: ICardProps) {
+  const loading = useLoadingStore(state => state.loading)
+
   return (
     <li className={clsx(styles.card, isActive && styles.active)} onClick={onClick}>
       <span className={styles.cityName}>
@@ -17,9 +20,9 @@ export default function Card({ city, isActive, onClick }: ICardProps) {
         {city.country && `, ${city.country}`}
       </span>
       {
-        city ?
+        city && !loading ?
           <span className={styles.cityTemp}>{city.weather?.current?.temp ? Math.round(city.weather.current.temp) : '-'}&deg;</span>
-        : <Spinner width={20} height={20}/>
+        : <span><Spinner width={20} height={20}/></span>
       }
     </li>
   )

@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  max-width: 1260px;
+  width: 100%;
+  padding: 30px;
+  background-color: var(--background-color);
+  gap: 30px;
+  border-radius: 20px;
+  min-height: 700px;
+}
+
+.today {
+  width: 60%;
+}
+
+.daily {
+  width: 40%;
+}
+
+/* Current */
+.current {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.currentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.cityName{
+  font-size: 25px;
+  font-weight: 1000;
+}
+.currentTemp {
+  font-size: 40px;
+  font-weight: 1000;
+}
+
+/* Hourly */
+.hourly, .airConditions, .daily {
+  background-color: var(--item-color);
+  padding: 20px;
+  border-radius: 20px;
+}
+/* airConditions */
+.airConditions {
+  margin-bottom: 10px;
+  position: relative;
+}
+.airConditionsList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.airConditionsListItem {
+  width: 50%;
+}
+
+.airConditionsListItem span {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}

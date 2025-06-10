@@ -1,53 +1,51 @@
 import { ReactElement } from 'react';
 import styles from './forecastList.module.css'
 import ForecastListItem from './ForecastListItem';
+import clsx from 'clsx';
 
-const dayNumberToNameMap: {short: string, full: string}[] = [
-  {short: "Sun", full: "Sunday"},
-  {short: "Mon", full: "Monday"},
-  {short: "Tue", full: "Tuesday"},
-  {short: "Wed", full: "Wednesday"},
-  {short: "Thu", full: "Thursday"},
-  {short: "Fri", full: "Friday"},
-  {short: "Sat", full: "Saturday"},
-]
 
 interface DailyForecast {
   type: "DailyWeather";
   weather: DailyWeather[];
+  itemsCount?: number,
+  direction?: "row" | "column",
+  clickable?: boolean
 }
 
 interface HourlyForecast {
   type: "HourlyWeather";
   weather: HourlyWeather[];
+  itemsCount?: number,
+  direction?: "row" | "column",
+  clickable?: boolean
 }
 
 interface CurrentForecast {
   type: "CurrentWeather";
   weather: CurrentWeather;
+  itemsCount?: number,
+  direction?: "row" | "column",
+  clickable?: boolean
 }
 
 type IForecastListProps = DailyForecast | HourlyForecast | CurrentForecast;
 
 export default function ForecastList({
-  type, weather
+  type, weather, itemsCount = 4, direction = "row", clickable = false
 }: IForecastListProps) {
   const generateListItems = () => {
     const listItems: ReactElement[] = []
     if (type === "HourlyWeather") {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < itemsCount; i++) {
         const index: number = (i + 1) * 3
-        const time = new Date(weather[index].dt * 1000).getHours() > 9 ? `${new Date(weather[index].dt * 1000).getHours()}:00` : `0${new Date(weather[index].dt * 1000).getHours()}:00`
         listItems.push(
-          <ForecastListItem key={i} heading={time} icon={weather[index].weather[0]} temp={weather[index].temp} />
+          <ForecastListItem key={i} type={type} weather={weather[index]} direction={direction} clickable={clickable} />
         )
       } 
     } else if (type === "DailyWeather") {
-      for (let i = 0; i < 4; i++) {
-        const dayNumber: number = new Date(weather[i].dt * 1000).getDay()
-        const dayName: string = dayNumber === new Date().getDay() ? "Today" : dayNumberToNameMap[dayNumber].short
+      for (let i = 0; i < itemsCount; i++) {
         listItems.push(
-          <ForecastListItem key={i} heading={dayName} icon={weather[i].weather[0]} temp={weather[i].temp} />
+          <ForecastListItem key={i} type={type} weather={weather[i]} direction={direction} clickable={clickable} />
         )
       }
     }
@@ -57,7 +55,7 @@ export default function ForecastList({
 
 
   return (
-    <ul className={styles.forecastList}>
+    <ul className={clsx(styles.forecastList, direction === "row" ? styles.row : styles.column)}>
       {
         generateListItems()
       }

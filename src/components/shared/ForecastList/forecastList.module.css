@@ -9,18 +9,43 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25%;
+  flex: 1;
+  justify-content: space-between;
 }
 
-.heading, .temp {
+.clickable {
+  cursor: pointer;
+}
+
+.heading, .temp, .icon {
   font-weight: 700;
+  flex: 1;
+}
+.icon {
+  display: flex;
+  align-items: center;
 }
 
-.forecastListItem:not(:last-child) {
-  border-right: 1px solid var(--gray-color);
+.forecastList.row .forecastListItem:not(:last-child) {
+  border-right: 1px solid #afafaf61;
+}
+
+.forecastList.column .forecastListItem:not(:last-child) {
+  border-bottom: 1px solid #afafaf61;
 }
 
 .min {
   color: #afafaf;
   font-weight: 300;
+}
+
+.row {
+  flex-direction: row;
+}
+.column {
+  flex-direction: column;
+}
+.forecastList.column .forecastListItem {
+  flex-direction: row;
+  width: 100%;
 }

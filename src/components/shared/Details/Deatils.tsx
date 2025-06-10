@@ -6,16 +6,24 @@ import { useActiveCityStore } from '@/store/activeCity'
 import { useUserStore } from '@/store/user'
 import Spinner from '@/components/ui/spinner/Spinner'
 import ForecastList from '../ForecastList/ForecastList'
+import { useLoadingStore } from '@/store/loading'
+import Button from '@/components/ui/button/Button'
+import { usePathname, useRouter } from 'next/navigation'
 
 export default function Deatils() {
   const { activeIndex } = useActiveCityStore(state => state)
   const city = useUserStore(state => state.citiesList[activeIndex])
+  const loading = useLoadingStore(state => state.loading)
+
+  const router = useRouter()
+  const currentPath = usePathname()
 
   return (
     <div className={styles.container}>
       {
-        city ? 
+        city && !loading ? 
           <>
+            <Button icon={{src: '/icons/btns/info.svg', position: "after", width: 24, height: 24}} onClick={() => router.push(`${currentPath}/forecast`)} additionalStyles={{padding: "5px", borderRadius: "50%", position: "absolute", right: "0", top: "0", border: "none"}} />
             <div className={styles.currentWeather}>
               <div className={styles.currentInfo}>
                 <span className={styles.curentCityName}>
@@ -27,7 +35,7 @@ export default function Deatils() {
                 <span className={styles.curentTemp}>{ city.weather?.current?.temp ? Math.round(city.weather.current.temp) : '-' }&deg;</span>
               </div>
               <div className={styles.currentIcon}>
-                <WeatherIcon weatherId={city.weather?.current?.weather?.[0].id ?? 404} iconCode={city.weather?.current?.weather?.[0].icon ?? "d"} width={250} height={200} priority={true} />
+                <WeatherIcon iconCode={city.weather?.current?.weather?.[0].icon ?? "not-avalaible"} width={250} height={200} priority={true} />
               </div>
             </div>
             <div className={styles.hourlyForecast}>
@@ -39,7 +47,7 @@ export default function Deatils() {
               { city.weather?.daily ? <ForecastList type="DailyWeather" weather={city.weather.daily} /> : null }
             </div>
 
-          </> : <Spinner width={250} height={250} styles={{position: 'absolute', left: "50%", top: "100px", transform: "translateX(-50%)"}} />
+          </> : <Spinner width={250} height={250} />
       }
     </div>
   )

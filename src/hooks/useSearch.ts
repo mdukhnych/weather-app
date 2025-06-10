@@ -1,10 +1,11 @@
 'use client'
 
 import { useUserStore } from "@/store/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { FIREBASE_DB } from "../../firebaseConfig";
-import { getWeather } from "@/services/weather";
+import { useActiveCityStore } from "@/store/activeCity";
+import useWeather from "./useWeather";
 
 export default function useSearch() {
   const [value, setValue] = useState('')
@@ -12,10 +13,26 @@ export default function useSearch() {
   const [isLoading, setIsLoading] = useState(false)
 
   const { uid, citiesList, setCitiesList } = useUserStore(state => state)
+  const { activeIndex, setActiveIndex } = useActiveCityStore(state => state)
+  const { getWeather } = useWeather()
+
+  useEffect(() => {
+    if (value.length > 0) {
+      setIsLoading(true)
+      const timeout = setTimeout(() => {
+        citySearchHandler()
+        setIsLoading(false)
+      }, 2000)
+
+      return () => clearTimeout(timeout);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   const clearSearchField = () => {
     setValue('')
     setList([])
+    setIsLoading(false)
   }
 
   const getCitiesByName = async (limit:number = 5) => {
@@ -29,13 +46,8 @@ export default function useSearch() {
     }
   }
 
-  const searchBtnClickHandler = async () => {
+  const citySearchHandler = async () => {
     if (!value.trim()) return
-    if (list.length > 0) {
-      clearSearchField()
-      return
-    }
-
     setIsLoading(true)
     await getCitiesByName()
     setIsLoading(false)
@@ -60,6 +72,16 @@ export default function useSearch() {
     clearSearchField()
   }
 
+  const deleteCity = async () => {
+    const ref = doc(FIREBASE_DB, 'users', uid)
+    const newCitiesList = citiesList;
+
+    newCitiesList.splice(activeIndex, 1)
+    setCitiesList(newCitiesList)
+    await updateDoc(ref, { citiesList: newCitiesList })
+    setActiveIndex(0)
+  }
+
   return { 
     value, 
     setValue, 
@@ -68,7 +90,9 @@ export default function useSearch() {
     isLoading, 
     setIsLoading, 
     getCitiesByName, 
-    searchBtnClickHandler, 
-    addCity
+    citySearchHandler, 
+    addCity,
+    deleteCity,
+    clearSearchField
   }
 }
